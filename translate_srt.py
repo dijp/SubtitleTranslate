@@ -107,7 +107,7 @@ def translate_file(root, name):
     chinese=re.split('@@@\n',''.join(arr))
 
     for i in range(len(sentence)):
-        fsrt.write(result[i] + '\n' + '<font color=#D8D8BF>' + sentence[i] + '\n' + '<font color=#5F9F9F>' + chinese[i] + '\n')
+        fsrt.write(result[i] + '\n' + '<font color=#D8D8BF>{\\fn黑体\\fs14}' + sentence[i] + '\n' + '<font color=#5F9F9F>{\\fn黑体\\fs10}' + chinese[i] + '\n')
     print("Translate subtitle file '" + new_srt + "' successfully!")
 
 
@@ -125,7 +125,7 @@ def main():
     # 修改path即可
     # path文件夹及其子文件夹下的所有srt文件将被翻译
     # 并且将原始的srt文件命名为“backup+原始名字.srt”
-    path = 'D:\\BaiduYunDownload\\ttt\\'
+    path = 'D:\\BaiduYunDownload\\C0126.A01.Subtitle\\'
     translate_file_in_path(path)
 
 
