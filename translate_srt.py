@@ -107,7 +107,7 @@ def translate_file(root, name):
     chinese=re.split('@@@\n',''.join(arr))
 
     for i in range(len(sentence)):
-        fsrt.write(result[i] + '\n' + '<font color=#D8D8BF>{\\fn黑体\\fs14}' + sentence[i] + '\n' + '<font color=#5F9F9F>{\\fn黑体\\fs10}' + chinese[i] + '\n')
+        fsrt.write(result[i] + '\n' + '<font color=#D8D8BF>{\\fn黑体\\fs18}' + sentence[i] + '\n' + '<font color=#5F9F9F>{\\fn黑体\\fs10}' + chinese[i] + '\n')
     print("Translate subtitle file '" + new_srt + "' successfully!")
 
 
