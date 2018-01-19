@@ -94,17 +94,25 @@ def translate_file(root, name):
     f = open(backup_srt)
     fsrt = open(new_srt, "w", encoding='utf-8')
     content = f.read()
-    result = re.findall(r'\d+\n(?:\d\d:){2}(?:\d\d),(?:\d){3} --> (?:\d\d:){2}(?:\d\d),(?:\d){3}', content)
-    sentence = re.split(r'\d+\n(?:\d\d:){2}(?:\d\d),(?:\d){3} --> (?:\d\d:){2}(?:\d\d),(?:\d){3}', content)
+    result = re.findall(r'\d+\n(?:\d\d:){2}(?:\d\d)[,\.](?:\d){3} --> (?:\d\d:){2}(?:\d\d)[,\.](?:\d){3}', content)
+    sentence = re.split(r'\d+\n(?:\d\d:){2}(?:\d\d)[,\.](?:\d){3} --> (?:\d\d:){2}(?:\d\d)[,\.](?:\d){3}', content)
     sentence.pop(0)
+    srcList=[[]]
+    srclen=0
     for i in range(len(sentence)):
-        sentence[i]=re.sub(r'\n', ' ', sentence[i])
-        sentence[i]=sentence[i].strip()
+        if srclen>4000 :
+            srcList.append([])
+            srclen=0
+        sentence[i]=re.sub(r'\n', ' ', sentence[i]).strip()
+        srcList[-1].append(sentence[i])
+        srclen+=len(sentence[i])
 
-    arr=translate('\n@@@\n'.join(sentence))
-    if arr[-1]==None:
-        arr=arr[:-1]
-    chinese=re.split('@@@\n',''.join(arr))
+    chinese=[]
+    for i in range(len(srcList)):
+        arr=translate('\n@@@\n'.join(srcList[i]))
+        if arr[-1]==None:
+            arr=arr[:-1]
+        chinese.extend(re.split('@@@\n',''.join(arr)))
 
     for i in range(len(sentence)):
         fsrt.write(result[i] + '\n' + '<font color=#D8D8BF>{\\fn黑体\\fs18}' + sentence[i] + '\n' + '<font color=#5F9F9F>{\\fn黑体\\fs10}' + chinese[i] + '\n')
@@ -125,7 +133,7 @@ def main():
     # 修改path即可
     # path文件夹及其子文件夹下的所有srt文件将被翻译
     # 并且将原始的srt文件命名为“backup+原始名字.srt”
-    path = 'D:\\BaiduYunDownload\\C0126.A01.Subtitle\\'
+    path = 'C:\\Users\\Administrator\\Downloads\\Compressed\\\C0126.A02.Subtitle_srt'
     translate_file_in_path(path)
 
 
